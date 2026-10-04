@@ -232,3 +232,21 @@ Ensure that there are no quotes or extra spaces around the token in your `.env` 
 TELEGRAM_BOT_TOKEN=123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ
 ```
 Restart the container with `docker compose restart bot`.
+
+---
+
+## ☕ Knowledge Base & Support
+
+The bot relies on a comprehensive accounting knowledge base (syllabus, account catalogs, theoretical notes, and practical exam exercises) to power its RAG retrieval.
+
+If you would like to obtain the curated knowledge base ready to use with the bot, or if you would like to support the ongoing development of this project, consider buying me a coffee:
+
+👉 **[Buy me a coffee - Ariel Bobadilla](https://buymeacoffee.com/coco.xor)**
+
+*(Once you've made a contribution, feel free to reach out to receive the full knowledge base dataset ready to drop into your `chroma_db/` folder).*
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
