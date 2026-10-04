@@ -10,7 +10,6 @@ from tqdm import tqdm
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from chromadb.utils import embedding_functions
-from chromadb.config import Settings
 
 class LocalChromaEmbeddings:
     """Implementa la interfaz de LangChain Embeddings usando el modelo local ONNX all-MiniLM-L6-v2."""
@@ -22,15 +21,6 @@ class LocalChromaEmbeddings:
 
     def embed_query(self, text: str) -> List[float]:
         return self._fn([text])[0]
-
-def get_chroma_settings(chroma_dir: Path) -> Settings:
-    """Retorna la configuración óptima para persistencia estable en disco usando SegmentAPI."""
-    return Settings(
-        chroma_api_impl="chromadb.api.segment.SegmentAPI",
-        is_persistent=True,
-        persist_directory=str(chroma_dir),
-        anonymized_telemetry=False
-    )
 
 def get_embeddings(use_ollama: bool = False, ollama_url: str = "http://localhost:11434", ollama_model: str = "nomic-embed-text"):
     if use_ollama:
@@ -61,7 +51,7 @@ def index_chunks(
 
     chroma_dir.mkdir(parents=True, exist_ok=True)
     embeddings = get_embeddings(use_ollama, ollama_url, ollama_model)
-    settings = get_chroma_settings(chroma_dir)
+    client = chromadb.PersistentClient(path=str(chroma_dir))
 
     print(f"\nCargando fragmentos desde: {jsonl_path}")
     raw_chunks = []
@@ -99,9 +89,9 @@ def index_chunks(
     start_time = time.time()
 
     vectorstore = Chroma(
+        client=client,
         collection_name=collection_name,
-        embedding_function=embeddings,
-        client_settings=settings
+        embedding_function=embeddings
     )
 
     for i in tqdm(range(0, len(documents), batch_size), desc="Indexando en ChromaDB"):
@@ -119,12 +109,12 @@ def test_query(chroma_dir: Path, collection_name: str, query: str, n_results: in
     print(f"Pregunta: '{query}'\n")
     
     embeddings = LocalChromaEmbeddings()
-    settings = get_chroma_settings(chroma_dir)
+    client = chromadb.PersistentClient(path=str(chroma_dir))
     
     vectorstore = Chroma(
+        client=client,
         collection_name=collection_name,
-        embedding_function=embeddings,
-        client_settings=settings
+        embedding_function=embeddings
     )
 
     retriever = vectorstore.as_retriever(search_kwargs={"k": n_results})
