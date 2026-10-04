@@ -1,0 +1,42 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - bot-net
+    # Descomenta este bloque si utilizas GPU NVIDIA en Docker:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: telegram_bot
+    restart: unless-stopped
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - OLLAMA_HOST=http://ollama:11434
+    volumes:
+      - .:/app
+    depends_on:
+      - ollama
+    networks:
+      - bot-net
+
+volumes:
+  ollama_data:
+
+networks:
+  bot-net:
+    driver: bridge

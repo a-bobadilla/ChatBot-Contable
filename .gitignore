@@ -1,0 +1,95 @@
+# ==========================================
+# Entornos virtuales
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
+
+# ==========================================
+# Caches y artefactos de Python
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# ==========================================
+# Variables de entorno y secretos
+# ==========================================
+.env
+.env.local
+.env.*.local
+.env.*
+!.env.example
+
+# ==========================================
+# Archivos de sistema operativo y editores
+# ==========================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editores / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
+
+# ==========================================
+# Logs y depuración
+# ==========================================
+*.log
+logs/
+
+# ==========================================
+# Bases de datos y almacenamiento vectorial
+# ==========================================
+chroma_db/
+*.sqlite3
+*.sqlite
+*.db
+*.bin
+
+# Directorios de pruebas temporales generados durante el desarrollo
+test_batch_db/
+test_fld/
+test_lc_db/
+test_lc_seg/
+test_loc/
+test_seg_db/
+test_*_db/
+
+# ==========================================
+# Caches de modelos y librerías IA (HuggingFace / PyTorch)
+# ==========================================
+.cache/
+models/
+huggingface/
+
+# ==========================================
+# Archivos pesados (PDFs originales)
+# ==========================================
+docs/*.pdf
+!docs/.gitkeep

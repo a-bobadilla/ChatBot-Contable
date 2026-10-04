@@ -1,0 +1,12 @@
+# Librerías comunes para el bot de Telegram e integración con Ollama
+python-telegram-bot
+ollama
+python-dotenv
+requests
+
+# LangChain y Base de Datos Vectorial
+chromadb
+langchain
+langchain-community
+langchain-chroma
+langchain-ollama
